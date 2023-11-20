@@ -23,7 +23,7 @@ public class MinesweeperGUI extends JFrame {
             for (int j = 0; j < gameMap.getMapColumnAmount(); j++) {
                 buttons[i][j] = new JButton();
                 buttons[i][j].setPreferredSize(new Dimension(40, 40));
-                buttons[i][j].setFont(new Font("Arial", Font.PLAIN, 18)); // Set font size
+                buttons[i][j].setFont(new Font("Arial", Font.PLAIN, 18));
 
                 add(buttons[i][j]);
 
@@ -50,7 +50,6 @@ public class MinesweeperGUI extends JFrame {
             updateButtons();
             if (gameMap.isGameLost()) {
                 JOptionPane.showMessageDialog(this, "You lost!");
-                // Close the application when "You Lost!" is clicked
                 dispose();
             } else if (gameMap.isGameWon()) {
                 JOptionPane.showMessageDialog(this, "You won!");
