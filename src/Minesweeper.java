@@ -1,41 +1,35 @@
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MinesweeperGUI extends JFrame {
-    private final GameMap gameMap;
+public class Minesweeper extends JFrame {
+    private final Map gameMap;
     private final JButton[][] buttons;
 
-    public MinesweeperGUI(GameMap gameMap) {
+    public Minesweeper(@NotNull GameMap gameMap) {
         this.gameMap = gameMap;
         this.buttons = new JButton[gameMap.getMapRowAmount()][gameMap.getMapColumnAmount()];
-
         initializeUI();
     }
 
     private void initializeUI() {
         setTitle("Minesweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(gameMap.getMapRowAmount(), gameMap.getMapColumnAmount()));
+        setLayout(new GridLayout( gameMap.getMapRowAmount(), gameMap.getMapColumnAmount()));
 
         for (int i = 0; i < gameMap.getMapRowAmount(); i++) {
             for (int j = 0; j < gameMap.getMapColumnAmount(); j++) {
                 buttons[i][j] = new JButton();
                 buttons[i][j].setPreferredSize(new Dimension(40, 40));
-                buttons[i][j].setFont(new Font("Arial", Font.PLAIN, 18)); // Set font size
+                buttons[i][j].setFont(new Font("Arial", Font.PLAIN, 18));
 
                 add(buttons[i][j]);
 
                 final int row = i;
                 final int col = j;
 
-                buttons[i][j].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        handleButtonClick(row, col);
-                    }
-                });
+                buttons[i][j].addActionListener(e -> handleButtonClick(row, col));
             }
         }
 
@@ -50,7 +44,6 @@ public class MinesweeperGUI extends JFrame {
             updateButtons();
             if (gameMap.isGameLost()) {
                 JOptionPane.showMessageDialog(this, "You lost!");
-                // Close the application when "You Lost!" is clicked
                 dispose();
             } else if (gameMap.isGameWon()) {
                 JOptionPane.showMessageDialog(this, "You won!");
@@ -77,18 +70,27 @@ public class MinesweeperGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                int difficulty = getDifficultyFromUser();
-                GameMap gameMapSolved = new GameMap(difficulty);
-                GameMap gameMap = new GameMap(gameMapSolved.getMapRowAmount(), gameMapSolved.getMapColumnAmount(), gameMapSolved);
-                new MinesweeperGUI(gameMap);
-            }
+        SwingUtilities.invokeLater(() -> {
+            Difficulty difficulty = getDifficultyFromUser();
+            SolvedGameMap gameMapSolved = new SolvedGameMap(difficulty);
+            GameMap gameMap = new GameMap(gameMapSolved.getMapRowAmount(), gameMapSolved.getMapColumnAmount(), gameMapSolved);
+            new Minesweeper(gameMap);
         });
     }
 
-    private static int getDifficultyFromUser() {
-        return Main.getDifficultyFromUser();
+    private static Difficulty getDifficultyFromUser() {
+        Difficulty[] options = {Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD};
+
+        return (Difficulty) JOptionPane.showInputDialog(
+                null,
+                "Pick the difficulty:",
+                "Difficulty Selection",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                Difficulty.EASY
+        );
     }
+
 }
+

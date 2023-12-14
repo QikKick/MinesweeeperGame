@@ -1,3 +1,8 @@
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Cell {
     public int row;
     public int column;
@@ -19,38 +24,11 @@ public class Cell {
         this.row = row;
         this.column = column;
         this.value = value;
-        this.bomb = false;
+        this.bomb = value.equals("X");
         this.isRevealed = false;
         this.isFlagged = false;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public boolean isBomb() {
-        return bomb;
-    }
-
-    public void setBomb(boolean bomb) {
-        this.bomb = bomb;
-    }
-
-    public boolean isRevealed() {
-        return isRevealed;
-    }
-
-    public void setRevealed(boolean revealed) {
-        isRevealed = revealed;
-    }
-
-    public boolean isFlagged() {
-        return isFlagged;
-    }
     public boolean isEmpty() {
         return (!bomb || value.equals("[]"));
     }
