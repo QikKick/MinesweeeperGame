@@ -12,13 +12,11 @@ public abstract class  Map {
             }
             System.out.println();
         }
-    };
+    }
 
     abstract int getMapRowAmount();
 
     abstract int getMapColumnAmount();
-
-    public abstract void printMap(boolean isGameLost);
 
     abstract boolean isGameLost();
 

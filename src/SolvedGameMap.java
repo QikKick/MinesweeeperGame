@@ -46,18 +46,7 @@ public class SolvedGameMap extends Map{
             }
         }
     }
-    @Override
-    public void printMap(boolean isGameLost) {
-        if(isGameLost) {
-            for(int i = 0; i < mapRowAmount; i++) {
-                for(int j = 0; j < mapColumnAmount; j++) {
-                    if(map[i][j].isBomb()) {
-                        map[i][j].setValue("X");
-                    }
-                }
-            }
-        }
-    }
+
 
     @Override
     boolean isGameLost() {

@@ -115,11 +115,6 @@ public class GameMap extends Map{
         return countOfBlanks == solvedMap.getBombAmount();
     }
 
-    @Override
-    public void printMap(boolean isGameLost) {
-        super.printMap();
-    }
-
     public boolean isGameLost() {
         return isGameLost;
     }
